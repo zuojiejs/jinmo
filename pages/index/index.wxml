@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="wrap">
+    <map id="map" class="map-content" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" markers="{{markers}}" bindmarkertap="{{markertap}}"></map>
+</view>
