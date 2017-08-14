@@ -21,10 +21,67 @@ Page({
             success: function(res) {
                 that.setData({
                     latitude: res.latitude,
-                    longitude: res.longitude
+                    longitude: res.longitude,
+                    markers: [{
+                        latitude: res.latitude,
+                        longitude: res.longitude,
+                        iconPath: '../../img/boy.png',
+                        width: 40,
+                        height: 40
+                    }]
                 })
+                that.test({
+                    latitude: res.latitude,
+                    longitude: res.longitude
+                })                
             }
         })
+    },
+
+    test: function (obj) {
+        var distance = 0.5;
+        var lon = 2 * Math.asin(Math.sin(distance / (2 * 6371)) / Math.cos(this.deg2rad(obj.latitude)));
+        lon = this.rad2deg(lon);
+        var lat = this.rad2deg(distance / 6371);     
+        this.data.markers.push({
+            longitude: obj.longitude - lon,
+            latitude: obj.latitude - lat,
+            iconPath: '../../img/boy.png',
+            width: 40,
+            height: 40            
+        })    
+        this.data.markers.push({
+            longitude: obj.longitude + lon,
+            latitude: obj.latitude - lat,
+            iconPath: '../../img/boy.png',
+            width: 40,
+            height: 40            
+        })    
+        this.data.markers.push({
+            longitude: obj.longitude - lon,
+            latitude: obj.latitude + lat,
+            iconPath: '../../img/boy.png',
+            width: 40,
+            height: 40            
+        })    
+        this.data.markers.push({
+            longitude: obj.longitude + lon,
+            latitude: obj.latitude + lat,
+            iconPath: '../../img/boy.png',
+            width: 40,
+            height: 40            
+        })
+        this.setData({
+            markers: this.data.markers
+        })
+    },
+
+    rad2deg: function (angle) {
+        return angle * 57.29577951308232 // angle / Math.PI * 180
+    },
+
+    deg2rad: function (angle) {
+        return angle * 0.017453292519943295 // (angle / 180) * Math.PI;
     },
 
     /**
