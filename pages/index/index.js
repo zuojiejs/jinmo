@@ -8,7 +8,8 @@ Page({
         latitude: '',
         longitude: '',
         scale: 14,
-        markers: []
+        markers: [],
+        showClass: false
     },
 
     /**
@@ -35,7 +36,27 @@ Page({
                     longitude: res.longitude
                 })                
             }
-        })
+        })  
+wx.getUserInfo({
+  success: function(res) {
+      console.log(res);
+  }
+})         
+    },
+
+    cardClick: function () {
+
+        wx.showModal({
+            title: '提示',
+            content: '这是一个模态弹窗',
+            success: function(res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })   
     },
 
     test: function (obj) {

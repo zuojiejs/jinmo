@@ -7,3 +7,16 @@
     height: 100%;
     width: 100%;
 }
+.card{
+    position: fixed;
+    top: 25rpx;
+    left: 25rpx;
+    width: 700rpx;
+    height: 60%;
+    background: white;
+    z-index: 100000;
+}
+.test{
+  -webkit-transform: scale(0, 0);
+  animation-duration: 2s;
+}
