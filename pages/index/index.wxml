@@ -1,13 +1,18 @@
 <!--index.wxml-->
 <view class="wrap"> 
     <map id="map" class="map-content" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" markers="{{markers}}" bindmarkertap="{{markertap}}">
-        <cover-view wx:if="{{showClass}}" class="card test" bindtap="cardClick">
-            card
+        <cover-image src="../../img/bg.png" class="bj">
+        </cover-image>  
+        <cover-view class="card">
+            <cover-view>
+                111
+            </cover-view>
+            <cover-view>
+                22222
+            </cover-view>
+            <cover-image src="../../img/boy.png" class="test">
+            </cover-image>
         </cover-view>
-        <cover-view wx:else class="card" bindtap="cardClick">
-            card
-            <cover-image src="../../img/boy.png"></cover-image>
-        </cover-view>   
     </map>
 </view>
 
