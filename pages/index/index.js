@@ -1,4 +1,6 @@
 // index.js
+var app = getApp();
+
 Page({
 
     /**
@@ -9,39 +11,81 @@ Page({
         longitude: '',
         scale: 14,
         markers: [],
-        showClass: false
+        showClass: false,
+        mapHeight: app.globalData.sysInfo.windowHeight * 2,
+        showCard: false,
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        let that = this;
+        var that = this;
+        this.initPage();
+        setTimeout(function(){
+            that.setData({
+                showCard: true,
+                mapHeight: app.globalData.sysInfo.windowHeight * 2 - 300
+            });
+        }, 2000);
+        // wx.getSystemInfo({
+        //     success (res) {
+        //         that.setData({
+        //             mapHeight: res.windowHeight * 2,
+        //             mapHeight2: res.windowHeight * 2 - 300
+        //         });
+        //     }
+        // })
+        // wx.getLocation({
+        //     type: "gcj02",
+        //     success: function(res) {
+        //         that.setData({
+        //             id: 1,
+        //             latitude: res.latitude,
+        //             longitude: res.longitude,
+        //             markers: [{
+        //                 id: 0,
+        //                 latitude: res.latitude,
+        //                 longitude: res.longitude,
+        //                 iconPath: '../../img/boy.png',
+        //                 width: 40,
+        //                 height: 40
+        //             }]
+        //         })
+        //         that.test({
+        //             latitude: res.latitude,
+        //             longitude: res.longitude
+        //         })                
+        //     }
+        // })        
+    },
+
+    //初始化页面
+    initPage: function() {
+        var that = this;
         wx.getLocation({
-            type: "gcj02",
+            type: 'gcj02',
             success: function(res) {
                 that.setData({
                     latitude: res.latitude,
-                    longitude: res.longitude,
-                    markers: [{
-                        latitude: res.latitude,
-                        longitude: res.longitude,
-                        iconPath: '../../img/boy.png',
-                        width: 40,
-                        height: 40
-                    }]
-                })
-                that.test({
-                    latitude: res.latitude,
                     longitude: res.longitude
-                })                
+                });
+                //拉取接口数据
+            },
+            fail: function(res) {  //用户未允许授权处理
+                wx.showModal({
+                    title: '提示',
+                    content: '定位失败，请稍候重试',
+                    success: function(res) {
+                        if(res.confirm){
+
+                        }else{
+
+                        }
+                    }
+                })
             }
-        })  
-wx.getUserInfo({
-  success: function(res) {
-      console.log(res);
-  }
-})         
+        });
     },
 
     cardClick: function () {
@@ -65,6 +109,7 @@ wx.getUserInfo({
         lon = this.rad2deg(lon);
         var lat = this.rad2deg(distance / 6371);     
         this.data.markers.push({
+            id: 2,
             longitude: obj.longitude - lon,
             latitude: obj.latitude - lat,
             iconPath: '../../img/boy.png',
@@ -72,6 +117,7 @@ wx.getUserInfo({
             height: 40            
         })    
         this.data.markers.push({
+            id: 3,
             longitude: obj.longitude + lon,
             latitude: obj.latitude - lat,
             iconPath: '../../img/boy.png',
@@ -79,6 +125,7 @@ wx.getUserInfo({
             height: 40            
         })    
         this.data.markers.push({
+            id: 4,
             longitude: obj.longitude - lon,
             latitude: obj.latitude + lat,
             iconPath: '../../img/boy.png',
@@ -86,6 +133,7 @@ wx.getUserInfo({
             height: 40            
         })    
         this.data.markers.push({
+            id: 5,
             longitude: obj.longitude + lon,
             latitude: obj.latitude + lat,
             iconPath: '../../img/boy.png',
@@ -109,7 +157,10 @@ wx.getUserInfo({
      * 点击标记点事件
      */
     markertap: function (e) {
-
+        var that = this;
+        this.setData({
+            mapHeight: this.data.mapHeight2
+        });
     },
 
     /**
